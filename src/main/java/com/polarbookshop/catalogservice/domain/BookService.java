@@ -9,27 +9,27 @@ public class BookService {
 
 	private final BookRepository bookRepository;
 
-	public Iterable<Book> viewBookList() {
+	public Iterable<Book> getBooks() {
 		return bookRepository.findAll();
 	}
 
-	public Book viewBookDetails(String isbn) {
+	public Book getBook(String isbn) {
 		return bookRepository.findByIsbn(isbn)
 							 .orElseThrow(() -> new BookNotFoundException(isbn));
 	}
 
-	public Book addBooktoCatalog(Book book) {
+	public Book addBookToCatalog(Book book) {
 		if (bookRepository.existByIsbn(book.isbn())) {
 			throw new BookAlreadyExistsException(book.isbn());
 		}
 		return bookRepository.save(book);
 	}
 
-	public void removeBookFromCatalog(String isbn) {
+	public void deleteBookFromCatalog(String isbn) {
 		bookRepository.deleteByIsbn(isbn);
 	}
 
-	public Book editBookDetails(String isbn, Book book) {
+	public Book editBook(String isbn, Book book) {
 		return bookRepository.findByIsbn(isbn)
 							 .map(existingBook -> {
 								 var bookToUpdate = new Book(existingBook.isbn(),
@@ -38,6 +38,6 @@ public class BookService {
 															 book.price());
 								 return bookRepository.save(bookToUpdate);
 							 })
-							 .orElseGet(() -> addBooktoCatalog(book));
+							 .orElseGet(() -> addBookToCatalog(book));
 	}
 }
