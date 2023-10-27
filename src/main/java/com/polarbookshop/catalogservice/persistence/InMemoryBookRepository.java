@@ -13,7 +13,6 @@ public class InMemoryBookRepository implements BookRepository {
 
 	private static final Map<String, Book> books = new ConcurrentHashMap<>();
 
-
 	@Override
 	public Iterable<Book> findAll() {
 		return books.values();
@@ -21,13 +20,13 @@ public class InMemoryBookRepository implements BookRepository {
 
 	@Override
 	public Optional<Book> findByIsbn(String isbn) {
-		return existByIsbn(isbn)
+		return existsByIsbn(isbn)
 				? Optional.of(books.get(isbn))
 				: Optional.empty();
 	}
 
 	@Override
-	public boolean existByIsbn(String isbn) {
+	public boolean existsByIsbn(String isbn) {
 		return books.get(isbn) != null;
 	}
 

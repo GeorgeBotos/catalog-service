@@ -6,7 +6,7 @@ public interface BookRepository {
 
     Iterable<Book> findAll();
     Optional<Book> findByIsbn(String isbn);
-    boolean existByIsbn(String isbn);
+    boolean existsByIsbn(String isbn);
     Book save(Book book);
     void deleteByIsbn(String isbn);
 
