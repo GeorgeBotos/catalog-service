@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -31,8 +32,8 @@ class CatalogServiceApplicationTests {
 				.isCreated()
 				.expectBody(Book.class)
 				.value(book -> {
-					assertNotNull(book);
-					assertEquals(expectedBook.isbn(), book.isbn());
+					assertThat(book).isNotNull();
+					assertThat(book.isbn()).isEqualTo(expectedBook.isbn());
 				});
 	}
 

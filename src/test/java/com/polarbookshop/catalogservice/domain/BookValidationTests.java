@@ -7,12 +7,10 @@ import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BookValidationTests {
 
@@ -20,8 +18,9 @@ public class BookValidationTests {
 
 	@BeforeAll
 	static void setUp() {
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		validator = factory.getValidator();
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+			validator = factory.getValidator();
+		}
 	}
 
 	@Test
@@ -34,7 +33,7 @@ public class BookValidationTests {
 		               .price(9.9)
 		               .build();
 		Set<ConstraintViolation<Book>> violations = validator.validate(book);
-		assertTrue(violations.isEmpty());
+		assertThat(violations).isEmpty();
 	}
 
 	@Test
@@ -47,9 +46,9 @@ public class BookValidationTests {
 		               .price(9.9)
 		               .build();
 		Set<ConstraintViolation<Book>> violations = validator.validate(book);
-		assertEquals(1, violations.size());
-		assertEquals("The ISBN format must be valid: a 10 or 13 digit number.", violations.iterator()
-		                                                                                  .next()
-		                                                                                  .getMessage());
+		assertThat(violations).hasSize(1);
+		assertThat(violations.iterator()
+		                     .next()
+		                     .getMessage()).isEqualTo("The ISBN format must be valid: a 10 or 13 digit number.");
 	}
 }
