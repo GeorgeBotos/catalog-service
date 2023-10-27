@@ -15,14 +15,16 @@ public class BookService {
 
 	public Book getBook(String isbn) {
 		return bookRepository.findByIsbn(isbn)
-							 .orElseThrow(() -> new BookNotFoundException(isbn));
+		                     .orElseThrow(() -> new BookNotFoundException(isbn));
 	}
 
 	public Book addBookToCatalog(Book book) {
 		if (bookRepository.existsByIsbn(book.isbn())) {
 			throw new BookAlreadyExistsException(book.isbn());
 		}
-		return bookRepository.save(book);
+		bookRepository.save(book);
+		return bookRepository.findByIsbn(book.isbn())
+		                     .orElse(null);
 	}
 
 	public void deleteBookFromCatalog(String isbn) {
@@ -31,13 +33,13 @@ public class BookService {
 
 	public Book editBook(String isbn, Book book) {
 		return bookRepository.findByIsbn(isbn)
-							 .map(existingBook -> {
-								 var bookToUpdate = new Book(existingBook.isbn(),
-															 book.title(),
-															 book.author(),
-															 book.price());
-								 return bookRepository.save(bookToUpdate);
-							 })
-							 .orElseGet(() -> addBookToCatalog(book));
+		                     .map(existingBook -> {
+			                     var bookToUpdate = new Book(existingBook.isbn(),
+			                                                 book.title(),
+			                                                 book.author(),
+			                                                 book.price());
+			                     return bookRepository.save(bookToUpdate);
+		                     })
+		                     .orElseGet(() -> addBookToCatalog(book));
 	}
 }
