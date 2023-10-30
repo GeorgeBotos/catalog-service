@@ -5,17 +5,18 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
+
+import java.time.Instant;
 
 @Builder
 public record Book(
 
 		@Id
 		Long id,
-
-		@Version
-		int version,
 
 		@NotBlank(message = "The book ISBN must be defined.")
 		@Pattern(regexp = "^([0-9]{10}|[0-9]{13})$",
@@ -30,5 +31,16 @@ public record Book(
 
 		@NotNull(message = "The book price must be defined.")
 		@Positive(message = "The book price must be greater than zero.")
-		Double price
-) {}
+		Double price,
+
+		@Version
+		int version,
+
+		@CreatedDate
+		Instant createdDate,
+
+		@LastModifiedDate
+		Instant lastModifiedDate
+
+
+		) {}
