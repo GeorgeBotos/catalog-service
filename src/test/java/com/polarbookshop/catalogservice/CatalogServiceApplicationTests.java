@@ -7,8 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CatalogServiceApplicationTests {
@@ -17,7 +15,7 @@ class CatalogServiceApplicationTests {
 	private WebTestClient webTestClient;
 
 	@Test
-	void contextLoads() {
+	void bookEndpointTest() {
 		var expectedBook = Book.builder()
 		                       .isbn("1234567890")
 		                       .title("Title")
