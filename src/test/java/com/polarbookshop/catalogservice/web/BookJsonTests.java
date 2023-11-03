@@ -20,18 +20,16 @@ public class BookJsonTests {
 	void testSerialize() throws Exception {
 		var book = Book.builder()
 		               .id(1L)
-		               .version(2)
 		               .isbn("1234567890123")
 		               .title("Title")
 		               .author("Author")
 		               .price(9.90)
+		               .version(2)
 		               .build();
 		var jsonContent = json.write(book);
 		assertThat(jsonContent).extractingJsonPathNumberValue("@.id")
 		                       .isEqualTo(book.id()
 		                                      .intValue());
-		assertThat(jsonContent).extractingJsonPathNumberValue("@.version")
-		                       .isEqualTo(book.version());
 		assertThat(jsonContent).extractingJsonPathStringValue("@.isbn")
 		                       .isEqualTo(book.isbn());
 		assertThat(jsonContent).extractingJsonPathStringValue("@.author")
@@ -40,6 +38,8 @@ public class BookJsonTests {
 		                       .isEqualTo(book.title());
 		assertThat(jsonContent).extractingJsonPathNumberValue("@.price")
 		                       .isEqualTo(book.price());
+		assertThat(jsonContent).extractingJsonPathNumberValue("@.version")
+		                       .isEqualTo(book.version());
 	}
 
 	@Test
@@ -47,20 +47,20 @@ public class BookJsonTests {
 	void testDeserialize() throws Exception {
 		var book = Book.builder()
 		               .id(1L)
-		               .version(2)
 		               .isbn("1234567890123")
 		               .title("Title")
 		               .author("Author")
 		               .price(9.90)
+		               .version(2)
 		               .build();
 		var jsonString = """
 		                 {
 		                   "id": 1,
-		                   "version": 2,
 		                   "isbn": "1234567890123",
 		                   "title": "Title",
 		                   "author": "Author",
-		                   "price": 9.9
+		                   "price": 9.9,
+		                   "version": 2
 		                 }
 		                 """;
 		assertThat(json.parse(jsonString)

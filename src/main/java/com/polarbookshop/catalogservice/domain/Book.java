@@ -20,7 +20,7 @@ public record Book(
 
 		@NotBlank(message = "The book ISBN must be defined.")
 		@Pattern(regexp = "^([0-9]{10}|[0-9]{13})$",
-				 message = "The ISBN format must be valid: a 10 or 13 digit number.")
+		         message = "The ISBN format must be valid: a 10 or 13 digit number.")
 		String isbn,
 
 		@NotBlank(message = "The book title must be defined.")
@@ -41,6 +41,4 @@ public record Book(
 
 		@LastModifiedDate
 		Instant lastModifiedDate
-
-
-		) {}
+) {}
