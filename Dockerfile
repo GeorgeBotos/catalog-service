@@ -13,6 +13,9 @@ RUN java -Djarmode=layertools -jar catalog-service.jar extract
 # Stage 2
 FROM eclipse-temurin:17
 
+RUN useradd spring
+USER spring
+
 COPY --from=builder workspace/dependencies/ ./
 COPY --from=builder workspace/spring-boot-loader/ ./
 COPY --from=builder workspace/snapshot-dependencies/ ./
