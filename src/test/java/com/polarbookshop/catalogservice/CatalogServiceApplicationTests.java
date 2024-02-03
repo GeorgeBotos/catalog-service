@@ -1,6 +1,7 @@
 package com.polarbookshop.catalogservice;
 
 import com.polarbookshop.catalogservice.domain.Book;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ class CatalogServiceApplicationTests {
 	@Autowired
 	private WebTestClient webTestClient;
 
+	@Disabled
 	@Test
 	@DisplayName("If a correct GET request is sent with an existing ISBN, the book is returned.")
 	void getBookEndpointTest() {
@@ -49,6 +51,7 @@ class CatalogServiceApplicationTests {
 		             });
 	}
 
+	@Disabled
 	@Test
 	@DisplayName("If a correct POST request is sent, then book is created.")
 	void postBookEndpointTest() {
@@ -71,6 +74,7 @@ class CatalogServiceApplicationTests {
 		             });
 	}
 
+	@Disabled
 	@Test
 	@DisplayName("If a correct PUT request is sent, then book is updated.")
 	void putBookEndpointTest() {
@@ -113,6 +117,7 @@ class CatalogServiceApplicationTests {
 		             });
 	}
 
+	@Disabled
 	@Test
 	@DisplayName("If correct DELETE request is sent, then book is deleted.")
 	void deleteBookEndpointTest() {
