@@ -62,7 +62,7 @@ jobs:
           chmod +x gradlew
           ./gradlew bootBuildImage --imageName ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ env.VERSION }}
       - name: OCI image vulnerability scanning
-        uses: anchor/scan-action@v3
+        uses: anchore/scan-action@v3
         id: scan
         with:
           image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ env.VERSION }}
